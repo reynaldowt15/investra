@@ -9,11 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      portofoliId: {
-        type: Sequelize.INTEGER
+      PortofoliId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Portofolios',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
-      companyId: {
-        type: Sequelize.INTEGER
+      CompanyId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Companies',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('portofolioCompanies');
+    await queryInterface.dropTable('PortofolioCompanies');
   }
 };

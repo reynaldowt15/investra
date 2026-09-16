@@ -1,0 +1,18 @@
+[
+	{
+		"id" : 1,
+		"email" : "reynaldowt15@gmail.com",
+		"password" : "$2b$10$Dktqn\/FMRzPvaOewXvXNouJC.KxUrQs0DtpqLJ144PbEz.RGjnUz6",
+		"role" : "admin",
+		"createdAt" : "2026-09-16T07:43:58.091Z",
+		"updatedAt" : "2026-09-16T07:43:58.091Z"
+	},
+	{
+		"id" : 2,
+		"email" : "ilhamsyahbm@gmail.com",
+		"password" : "$2b$10$HTT6pYn6zT1Wj0GnTq9n\/ukLPYye3OAPn1ACFd5BJk7QBsHxH0NSi",
+		"role" : "user",
+		"createdAt" : "2026-09-16T07:46:53.410Z",
+		"updatedAt" : "2026-09-16T07:46:53.410Z"
+	}
+]
