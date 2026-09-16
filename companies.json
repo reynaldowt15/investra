@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Nusantara Cloudworks",
+    "address": "Jl. Merdeka No. 42, Bandung, West Java, Indonesia",
+    "sector": "Cloud Computing"
+  },
+  {
+    "name": "Garuda GreenTech",
+    "address": "Jl. Sudirman No. 18, Jakarta, Indonesia",
+    "sector": "Renewable Energy"
+  },
+  {
+    "name": "Archipelago Analytics",
+    "address": "Jl. Diponegoro No. 77, Surabaya, East Java, Indonesia",
+    "sector": "Data Analytics"
+  },
+  {
+    "name": "Bumi Harvest Labs",
+    "address": "Jl. Asia Afrika No. 15, Bandung, West Java, Indonesia",
+    "sector": "Agriculture Technology"
+  },
+  {
+    "name": "Cendana Fintech",
+    "address": "Jl. Gatot Subroto No. 103, Jakarta, Indonesia",
+    "sector": "Financial Technology"
+  },
+  {
+    "name": "Java Robotics",
+    "address": "Jl. Kaliurang No. 56, Yogyakarta, Indonesia",
+    "sector": "Robotics"
+  },
+  {
+    "name": "Sagara Health Systems",
+    "address": "Jl. Pemuda No. 29, Semarang, Central Java, Indonesia",
+    "sector": "Healthcare Technology"
+  },
+  {
+    "name": "Merapi Digital Studio",
+    "address": "Jl. Malioboro No. 91, Yogyakarta, Indonesia",
+    "sector": "Digital Media"
+  },
+  {
+    "name": "Samudra Logistics",
+    "address": "Jl. Perintis Kemerdekaan No. 64, Makassar, South Sulawesi, Indonesia",
+    "sector": "Logistics"
+  },
+  {
+    "name": "Rimba Materials",
+    "address": "Jl. Veteran No. 38, Medan, North Sumatra, Indonesia",
+    "sector": "Advanced Materials"
+  }
+]
