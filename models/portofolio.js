@@ -22,23 +22,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Portofolio.init({
-    UserId: DataTypes.INTEGER,
-    value: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: `Value required!`
+          msg: `Portofolio Name required!`
         },
         notEmpty: {
-          msg: `Value required!`
-        },
-        min: {
-          args: 50000,
-          msg: `Value minimum 50.000`
+          msg: `Portofolio Name required!`
         }
-      }
+      },
     },
+    UserId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Portofolio',

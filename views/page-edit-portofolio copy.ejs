@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partial/head') %>
+</head>
+
+<body style="background-color: #ddd;">
+    <!-- NAVBAR -->
+    <%- include('./partial/navbar') %>
+
+        <div class="container-fluid p-5 min-vh-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <div class="card rounded-3 text-black">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body p-md-5 mx-md-4">
+                                    <div class="text-center">
+                                        <h4 class="mt-1 mb-5 pb-1">Edit your Portofolio</h4>
+                                    </div>
+
+                                    <form action="/edit/portofolio/<%= dataPortofolioById.id %>" method="post">
+                                        <p><strong>
+                                                <%= dataPortofolioById.Companies[0].name %>
+                                            </strong>, <%= dataPortofolioById.Companies[0].sector %>
+                                        </p>
+                                        <p class="text-muted">
+                                            <%= dataPortofolioById.Companies[0].address %>
+                                        </p>
+
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <label class="form-label">Value</label>
+                                            <input type="number" name="value" class="form-control"
+                                                value="<%= dataPortofolioById.value %>" />
+                                        </div>
+
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <input type="submit" value="Add portofolio"
+                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+        <%- include('./partial/script') %>
+</body>
+
+</html>

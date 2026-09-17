@@ -25,24 +25,25 @@
                                             </p>
                                             <% }) %>
                                                 <% } %>
-                                                    <form action="/add/portofolio" method="post">
-                                                        <p><strong>Add portofolio</strong></p>
+
+                                                    <form action="/add/portofolio/<%= id %>/companies" method="post">
+                                                        <p><strong>Add company</strong></p>
 
                                                         <div data-mdb-input-init class="form-outline mb-4">
                                                             <label class="form-label">Company</label>
                                                             <select name="CompanyId">
                                                                 <option value="" selected disabled>Select One</option>
-                                                                <% dataCompanies.forEach(el=> { %>
-                                                                    <option value="<%= el.id %>">
-                                                                        <%= el.name %> - <%= el.sector %>
-                                                                    </option>
-                                                                    <% }) %>
+                                                                <% let
+                                                                    alreadyInvested=dataPortofolioById.Companies.map(el=>
+                                                                    el.id)%>
+                                                                    <% dataCompanies.forEach(el=> { %>
+                                                                        <% if (!alreadyInvested.includes(el.id)) { %>
+                                                                            <option value="<%= el.id %>">
+                                                                                <%= el.name %> - <%= el.sector %>
+                                                                            </option>
+                                                                            <% } %>
+                                                                                <% }) %>
                                                             </select>
-                                                        </div>
-
-                                                        <div data-mdb-input-init class="form-outline mb-4">
-                                                            <label class="form-label">Portofolio Name</label>
-                                                            <input type="text" name="name" class="form-control" />
                                                         </div>
 
                                                         <div data-mdb-input-init class="form-outline mb-4">

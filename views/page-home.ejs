@@ -23,8 +23,8 @@
 
                 <div class="col">
                     <form class="d-flex" method="get" accept="/home">
-                        <input class="form-control me-2" type="search" name="search"
-                            placeholder="Search by Company Name" aria-label="Search" />
+                        <input class="form-control me-2" type="search" name="search" placeholder="by Portofolio Name"
+                            aria-label="Search" />
                         <button class="btn btn-outline-secondary" type="submit">Search</button>
                     </form>
 
@@ -38,8 +38,8 @@
                     <thead class="text-center">
                         <tr>
                             <th>No.</th>
-                            <th>Company Name</th>
-                            <th>Sector</th>
+                            <th>Portofolio Name</th>
+                            <th>Number of Company</th>
                             <th>Value</th>
                             <th>Action</th>
                         </tr>
@@ -51,13 +51,17 @@
                                     <%= i+1 %>.
                                 </td>
                                 <td>
-                                    <%= el.Companies[0].formatCompany %>
+                                    <%= el.name %>
                                 </td>
                                 <td>
-                                    <%= el.Companies[0].sector %>
+                                    <%= el.Companies.length %>
                                 </td>
                                 <td>
-                                    <%= Helper.formatRupiah(el.value) %>
+                                    <% let totalValue=0 %>
+                                        <% el.Companies.forEach(el=> { %>
+                                            <% totalValue +=el.PortofolioCompany.value %>
+                                                <% }) %>
+                                                    <%= Helper.formatRupiah(totalValue) %>
                                 </td>
                                 <td class="text-center">
                                     <a href=" /edit/portofolio/<%=el.id %>" class="btn btn-success">Edit</a>

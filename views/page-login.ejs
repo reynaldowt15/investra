@@ -19,26 +19,32 @@
                                 <form action="/login" method="post">
                                     <p>Please login to your Investra account</p>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="">E-mail</label>
-                                        <input type="email" name="email" id="" class="form-control"
-                                            placeholder="E-mail address" />
-                                    </div>
+                                    <% if (error) { %>
+                                        <p style="color: red;">
+                                            <%= error %>
+                                        </p>
+                                        <% } %>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="">Password</label>
-                                        <input type="password" name="password" id="" class="form-control" />
-                                    </div>
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" for="">E-mail</label>
+                                                <input type="email" name="email" id="" class="form-control"
+                                                    placeholder="E-mail address" />
+                                            </div>
 
-                                    <div class="text-center pt-1 pb-1">
-                                        <input type="submit" value="Log-in"
-                                            class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                                    </div>
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" for="">Password</label>
+                                                <input type="password" name="password" id="" class="form-control" />
+                                            </div>
 
-                                    <div class="d-flex align-items-center justify-content-center pb-4">
-                                        <p class="mb-0 me-2">Don't have an account?</p>
-                                        <a href="/register">Create Account</a>
-                                    </div>
+                                            <div class="text-center pt-1 pb-1">
+                                                <input type="submit" value="Log-in"
+                                                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                                            </div>
+
+                                            <div class="d-flex align-items-center justify-content-center pb-4">
+                                                <p class="mb-0 me-2">Don't have an account?</p>
+                                                <a href="/register">Create Account</a>
+                                            </div>
 
                                 </form>
 
