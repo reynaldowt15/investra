@@ -5,8 +5,8 @@
     <%- include('./partial/head') %>
 </head>
 
-<body>
-    <div class="container-fluid p-5 min-vh-100" style="background-color: #eee;">
+<body style="background-color: #ddd;">
+    <div class="container-fluid p-5 min-vh-100" style="background-color: #ddd;">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col">
                 <div class="card rounded-3 text-black">
@@ -16,28 +16,28 @@
                                 <div class="text-center">
                                     <h4 class="mt-1 mb-5 pb-1">Investra</h4>
                                 </div>
-                                <form accept="/login" method="post">
+                                <form action="/login" method="post">
                                     <p>Please login to your Investra account</p>
 
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="">Username</label>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="">E-mail</label>
                                         <input type="email" name="email" id="" class="form-control"
                                             placeholder="E-mail address" />
                                     </div>
 
-                                    <div data-mdb-input-init class="form-outline mb-4">
+                                    <div class="form-outline mb-4">
                                         <label class="form-label" for="">Password</label>
                                         <input type="password" name="password" id="" class="form-control" />
                                     </div>
 
-                                    <div class="text-center pt-1 mb-5 pb-1">
+                                    <div class="text-center pt-1 pb-1">
                                         <input type="submit" value="Log-in"
                                             class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-center pb-4">
                                         <p class="mb-0 me-2">Don't have an account?</p>
-                                        <a href="/register" class="btn btn-outline-secondary">Create Account</a>
+                                        <a href="/register">Create Account</a>
                                     </div>
 
                                 </form>

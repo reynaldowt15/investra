@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand bg-body-secondary">
+    <div class="container-fluid justify-content-start gap-2">
+        <ul class="navbar-nav w-100">
+            <li class="navbar-brand"><span>Investra</span></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/companies">Companies</a>
+            </li>
+            <li class="">
+                <span></span>
+            </li>
+        </ul>
+        <a class="btn btn-outline-secondary" href="/profile">Profile</a>
+        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
+    </div>
+
+    <div class=" modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="/logout" class="btn btn-danger">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
