@@ -9,6 +9,8 @@ const {
 } = require("../models/index")
 
 const bcryptjs = require(`bcryptjs`)
+const sendEmail = require('../mailer/mailer')
+const { welcomeEmail } = require('../mailer/templates')
 
 class Controller {
     static async loginPage(req, res) {
@@ -127,6 +129,12 @@ class Controller {
                 name
             })
 
+            await sendEmail(
+                email,
+                'Welcome to Investra',
+                welcomeEmail(name)
+            )
+
             res.redirect('/login')
 
         } catch (error) {
@@ -199,7 +207,8 @@ class Controller {
 
             await UserProfile.update(
                 {
-                    name: req.body.name
+                    name: req.body.name,
+                    photoUrl: req.body.photoUrl
                 },
                 {
                     where: {
