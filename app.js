@@ -31,7 +31,7 @@ const isAdmin = (req, res, next) => {
   console.log(req.session)
   if (req.session.user.role !== `admin`) {
     const msg = `Only admin can access!`
-    res.redirect(`/login?error=${msg}`)
+    res.redirect(`/home?error=${msg}`)
   } else {
     next()
   }
@@ -41,12 +41,25 @@ app.get(`/`, (req, res) => {
   res.redirect(`/login`)
 })
 
+app.get(`/register`, Controller.getRegister)
+app.post(`/register`, Controller.postRegister)
+
 app.get(`/login`, Controller.loginPage)
 app.post(`/login`, Controller.postLogin)
 
-app.get(`/home`, isLogin, Controller.homePage)
-app.get(`/edit/:id`, isLogin, Controller.editPortofolio)
-app.post(`/edit/:id`, isLogin, Controller.postEditPortofolio)
+app.get(`/home`, isLogin, Controller.home)
+
+app.get(`/add/portofolio`, isLogin, Controller.addPortofolio)
+app.post(`/add/portofolio`, isLogin, Controller.postAddPortofolio)
+
+app.get(`/profile`, isLogin, Controller.getProfile)
+app.get('/profile/edit', isLogin, Controller.getEditProfile)
+app.post('/profile/edit', isLogin, Controller.postEditProfile)
+
+app.get(`/companies`, isLogin, Controller.getCompany)
+
+app.get(`/edit/portofolio/:id`, isLogin, Controller.editPortofolio)
+app.post(`/edit/portofolio/:id`, isLogin, Controller.postEditPortofolio)
 
 app.get(`/admin`, isLogin, isAdmin, Controller.adminPage)
 

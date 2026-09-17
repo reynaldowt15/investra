@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = reqires('fs').promises
+const fs = require('fs').promises
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {

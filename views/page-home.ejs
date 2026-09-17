@@ -5,20 +5,30 @@
     <%- include('./partial/head') %>
 </head>
 
-<body>
+<body style="background-color: #ddd;">
 
     <!-- NAVBAR -->
     <%- include('./partial/navbar') %>
 
         <div class="container-fluid">
 
-            <!-- SEARCH -->
+            <!-- ADD & SEARCH -->
             <div class="row px-4 pt-4">
-                <form class="d-flex" method="get" accept="/home">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search by Company Name"
-                        aria-label="Search" />
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </form>
+                <h3><strong>Hello, <%= dataProfile.name %></strong></h3>
+                <div class="col">
+                    <a href="/add/portofolio" class="btn btn-outline-success ">Add
+                        Portofolio</a>
+
+                </div>
+
+                <div class="col">
+                    <form class="d-flex" method="get" accept="/home">
+                        <input class="form-control me-2" type="search" name="search"
+                            placeholder="Search by Company Name" aria-label="Search" />
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
+
+                </div>
             </div>
 
 
@@ -41,7 +51,7 @@
                                     <%= i+1 %>.
                                 </td>
                                 <td>
-                                    <%= el.Companies[0].name %>
+                                    <%= el.Companies[0].formatCompany %>
                                 </td>
                                 <td>
                                     <%= el.Companies[0].sector %>
@@ -50,17 +60,14 @@
                                     <%= Helper.formatRupiah(el.value) %>
                                 </td>
                                 <td class="text-center">
-                                    <a href=" /edit/<%=el.id %>" class="btn btn-success">Edit</a>
-                                    <a href=" /delete/<%=el.id %>" class="btn btn-danger">Delete</a>
+                                    <a href=" /edit/portofolio/<%=el.id %>" class="btn btn-success">Edit</a>
+                                    <a href=" /delete/portofolio/<%=el.id %>" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                             <% }) %>
                     </tbody>
                 </table>
             </div>
-
-
-
         </div>
 
         <%- include('./partial/script') %>

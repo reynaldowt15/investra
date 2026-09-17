@@ -16,8 +16,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PortofolioCompany.init({
-    PortofolioId: DataTypes.INTEGER,
-    CompanyId: DataTypes.INTEGER
+    PortofolioId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `Company required!`
+        },
+        notEmpty: {
+          msg: `Company required!`
+        }
+      }
+    },
+    CompanyId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `Company required!`
+        },
+        notEmpty: {
+          msg: `Company required!`
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'PortofolioCompany',
