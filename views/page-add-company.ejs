@@ -6,67 +6,72 @@
 </head>
 
 <body style="background-color: #ddd;">
-    <div class="container-fluid p-5 min-vh-100" style="background-color: #ddd;">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col">
-                <div class="card rounded-3 text-black">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card-body p-md-5 mx-md-4">
-                                <div class="text-center">
-                                    <h4 class="mt-1 mb-5 pb-1">Investra</h4>
+    <%- include('./partial/navbar') %>
+        <div class="container-fluid p-5 " style="background-color: #ddd;">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <div class="card rounded-3 text-black">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body p-md-5 mx-md-4">
+                                    <div class="text-center">
+                                        <h4 class="mt-1 mb-5 pb-1">Investra</h4>
+                                    </div>
+
+                                    <% if (error) { %>
+                                        <% error=error.split(`,`) %>
+                                            <% error.forEach(el=> { %>
+                                                <p style="color: red;">
+                                                    <%= el %>
+                                                </p>
+                                                <% }) %>
+                                                    <% } %>
+
+                                                        <form action="/add/portofolio/<%= id %>/companies"
+                                                            method="post">
+                                                            <p><strong>Add company</strong></p>
+
+                                                            <div data-mdb-input-init class="form-outline mb-4">
+                                                                <label class="form-label">Company</label>
+                                                                <select name="CompanyId" class="form-select">
+                                                                    <option value="" selected disabled>Select One
+                                                                    </option>
+                                                                    <% let
+                                                                        alreadyInvested=dataPortofolioById.Companies.map(el=>
+                                                                        el.id)%>
+                                                                        <% dataCompanies.forEach(el=> { %>
+                                                                            <% if (!alreadyInvested.includes(el.id)) {
+                                                                                %>
+                                                                                <option value="<%= el.id %>">
+                                                                                    <%= el.name %> - <%= el.sector %>
+                                                                                </option>
+                                                                                <% } %>
+                                                                                    <% }) %>
+                                                                </select>
+                                                            </div>
+
+                                                            <div data-mdb-input-init class="form-outline mb-4">
+                                                                <label class="form-label">Value</label>
+                                                                <input type="number" name="value"
+                                                                    class="form-control" />
+                                                            </div>
+
+                                                            <div class="text-center pt-1 mb-5 pb-1">
+                                                                <input type="submit" value="Add portofolio"
+                                                                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                                                            </div>
+
+                                                        </form>
                                 </div>
-
-                                <% if (error) { %>
-                                    <% error=error.split(`,`) %>
-                                        <% error.forEach(el=> { %>
-                                            <p style="color: red;">
-                                                <%= el %>
-                                            </p>
-                                            <% }) %>
-                                                <% } %>
-
-                                                    <form action="/add/portofolio/<%= id %>/companies" method="post">
-                                                        <p><strong>Add company</strong></p>
-
-                                                        <div data-mdb-input-init class="form-outline mb-4">
-                                                            <label class="form-label">Company</label>
-                                                            <select name="CompanyId">
-                                                                <option value="" selected disabled>Select One</option>
-                                                                <% let
-                                                                    alreadyInvested=dataPortofolioById.Companies.map(el=>
-                                                                    el.id)%>
-                                                                    <% dataCompanies.forEach(el=> { %>
-                                                                        <% if (!alreadyInvested.includes(el.id)) { %>
-                                                                            <option value="<%= el.id %>">
-                                                                                <%= el.name %> - <%= el.sector %>
-                                                                            </option>
-                                                                            <% } %>
-                                                                                <% }) %>
-                                                            </select>
-                                                        </div>
-
-                                                        <div data-mdb-input-init class="form-outline mb-4">
-                                                            <label class="form-label">Value</label>
-                                                            <input type="number" name="value" class="form-control" />
-                                                        </div>
-
-                                                        <div class="text-center pt-1 mb-5 pb-1">
-                                                            <input type="submit" value="Add portofolio"
-                                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                                                        </div>
-
-                                                    </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+        </div>
 
-    <%- include('./partial/script') %>
+        <%- include('./partial/script') %>
 </body>
 
 </html>

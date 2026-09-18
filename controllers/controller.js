@@ -58,7 +58,7 @@ class Controller {
     static async home(req, res) {
         const { search } = req.query
         try {
-            let q = { include: { model: Company, attributes: ['name', 'address', 'sector'] }, attributes: ['name', 'id', 'value'], where: { UserId: req.session.user.id }, order: [['value', 'DESC']] }
+            let q = { include: { model: Company, attributes: ['name', 'address', 'sector'] }, attributes: ['name', 'id'], where: { UserId: req.session.user.id }, order: [[`name`, `ASC`]] }
             if (search) {
                 q.where.name = { [Op.iLike]: `%${search}%` }
             }

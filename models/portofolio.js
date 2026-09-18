@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static async fetchDataToEdit(id) {
-      return await Portofolio.findByPk(id, { include: { model: sequelize.models.Company, attributes: { exclude: ['createdAt', 'updatedAt'] } }, attributes: { exclude: ['createdAt', 'updatedAt'] } })
+      return await Portofolio.findByPk(id, { include: { model: sequelize.models.Company, attributes: { exclude: ['createdAt', 'updatedAt'] }, order: [['name', 'ASC']] }, attributes: { exclude: ['createdAt', 'updatedAt'] } })
     }
 
     static associate(models) {

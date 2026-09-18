@@ -26,14 +26,11 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <h5 class="mb-2">
-                                                <%= el.name %>
+                                                <%= el.formatCompany %>
                                             </h5>
-                                            <p class="mb-1">
+                                            <p class="mb-4">
                                                 <strong>Sector:</strong>
                                                 <%= el.sector %>
-                                            </p>
-                                            <p class="mb-4 text-muted">
-                                                <%= el.address %>
                                             </p>
                                         </div>
 
@@ -47,9 +44,9 @@
                                                     </label>
                                                     <input class="form-control w-auto" type="number" name="value"
                                                         value="<%= el.PortofolioCompany.value %>">
-                                                    <input type="submit" class="btn btn-outline-secondary">
+                                                    <input type="submit" class="btn btn-outline-success">
                                                     <a href="/delete/portofolio/<%= dataPortofolioById.id %>/<%= el.PortofolioCompany.CompanyId %>"
-                                                        class="btn btn-danger">Delete</a>
+                                                        class="btn btn-outline-danger">Delete</a>
                                                 </div>
                                             </form>
                                         </div>
