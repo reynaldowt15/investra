@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const session = require(`express-session`)
 const Controller = require(`./controllers/controller`);
@@ -18,7 +20,7 @@ app.use(session({
 }))
 
 const isLogin = (req, res, next) => {
-  console.log(req.session)
+  // console.log(req.session)
   if (!req.session.user) {
     const msg = `Please login first!`
     res.redirect(`/login?error=${msg}`)
@@ -28,7 +30,7 @@ const isLogin = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  console.log(req.session)
+  // console.log(req.session)
   if (req.session.user.role !== `admin`) {
     const msg = `Only admin can access!`
     res.redirect(`/home?error=${msg}`)
@@ -52,14 +54,21 @@ app.get(`/home`, isLogin, Controller.home)
 app.get(`/add/portofolio`, isLogin, Controller.addPortofolio)
 app.post(`/add/portofolio`, isLogin, Controller.postAddPortofolio)
 
+app.get(`/add/portofolio/:id/companies`, isLogin, Controller.addCompany)
+app.post(`/add/portofolio/:id/companies`, isLogin, Controller.postAddCompany)
+
 app.get(`/profile`, isLogin, Controller.getProfile)
 app.get('/profile/edit', isLogin, Controller.getEditProfile)
 app.post('/profile/edit', isLogin, Controller.postEditProfile)
 
 app.get(`/companies`, isLogin, Controller.getCompany)
 
+app.get(`/delete/portofolio/:id`, isLogin, Controller.deletePortofolio)
+app.get(`/delete/portofolio/:id/:companyId`, isLogin, Controller.deleteCompanyPortofolio)
+
 app.get(`/edit/portofolio/:id`, isLogin, Controller.editPortofolio)
-app.post(`/edit/portofolio/:id`, isLogin, Controller.postEditPortofolio)
+app.post(`/edit/portofolio/:id/:companyId`, isLogin, Controller.postEditPortofolioCompany)
+
 
 app.get(`/admin`, isLogin, isAdmin, Controller.adminPage)
 

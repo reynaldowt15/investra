@@ -9,45 +9,54 @@
     <!-- NAVBAR -->
     <%- include('./partial/navbar') %>
 
-        <div class="container-fluid p-5 min-vh-100">
+        <div class="container-fluid p-5">
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <div class="card rounded-3 text-black">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-body p-md-5 mx-md-4">
-                                    <div class="text-center">
-                                        <h4 class="mt-1 mb-5 pb-1">Edit your Portofolio</h4>
+                <div class="card rounded-3 text-black">
+                    <div class="card-body p-md-5 mx-md-4">
+                        <div class="text-center">
+                            <h4 class="mt-1 mb-4 pb-1">Portofolio "<%= dataPortofolioById.name %>"</h4>
+                        </div>
+
+                        <a href="/add/portofolio/<%= dataPortofolioById.id %>/companies"
+                            class="btn btn-outline-success mb-2">Add Company</a>
+
+                        <div>
+                            <% dataPortofolioById.Companies.forEach(el=> { %>
+                                <div class="card mb-3 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <h5 class="mb-2">
+                                                <%= el.formatCompany %>
+                                            </h5>
+                                            <p class="mb-4">
+                                                <strong>Sector:</strong>
+                                                <%= el.sector %>
+                                            </p>
+                                        </div>
+
+                                        <div class="row justify-content-end align-items-center">
+                                            <form
+                                                action="/edit/portofolio/<%= dataPortofolioById.id %>/<%= el.PortofolioCompany.CompanyId%>"
+                                                method="post">
+                                                <div class="d-flex gap-2 justify-content-start">
+                                                    <label class="form-label">
+                                                        Invested money:
+                                                    </label>
+                                                    <input class="form-control w-auto" type="number" name="value"
+                                                        value="<%= el.PortofolioCompany.value %>">
+                                                    <input type="submit" class="btn btn-outline-success">
+                                                    <a href="/delete/portofolio/<%= dataPortofolioById.id %>/<%= el.PortofolioCompany.CompanyId %>"
+                                                        class="btn btn-outline-danger">Delete</a>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-
-                                    <form action="/edit/portofolio/<%= dataPortofolioById.id %>" method="post">
-                                        <p><strong>
-                                                <%= dataPortofolioById.Companies[0].name %>
-                                            </strong>, <%= dataPortofolioById.Companies[0].sector %>
-                                        </p>
-                                        <p class="text-muted">
-                                            <%= dataPortofolioById.Companies[0].address %>
-                                        </p>
-
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label">Value</label>
-                                            <input type="number" name="value" class="form-control"
-                                                value="<%= dataPortofolioById.value %>" />
-                                        </div>
-
-                                        <div class="text-center pt-1 mb-5 pb-1">
-                                            <input type="submit" value="Add portofolio"
-                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                                        </div>
-
-                                    </form>
                                 </div>
-                            </div>
+                                <% }) %>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
 

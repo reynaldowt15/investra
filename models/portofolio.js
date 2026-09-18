@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static async fetchDataToEdit(id) {
-      return await Portofolio.findByPk(id, { include: { model: sequelize.models.Company, attributes: { exclude: ['createdAt', 'updatedAt'] } }, attributes: { exclude: ['createdAt', 'updatedAt'] } })
+      return await Portofolio.findByPk(id, { include: { model: sequelize.models.Company, attributes: { exclude: ['createdAt', 'updatedAt'] }, order: [['name', 'ASC']] }, attributes: { exclude: ['createdAt', 'updatedAt'] } })
     }
 
     static associate(models) {
@@ -22,23 +22,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Portofolio.init({
-    UserId: DataTypes.INTEGER,
-    value: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: `Value required!`
+          msg: `Portofolio Name required!`
         },
         notEmpty: {
-          msg: `Value required!`
-        },
-        min: {
-          args: 50000,
-          msg: `Value minimum 50.000`
+          msg: `Portofolio Name required!`
         }
-      }
+      },
     },
+    UserId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Portofolio',

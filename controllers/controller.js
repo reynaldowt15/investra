@@ -9,6 +9,8 @@ const {
 } = require("../models/index")
 
 const bcryptjs = require(`bcryptjs`)
+const sendEmail = require('../mailer/mailer')
+const { welcomeEmail } = require('../mailer/templates')
 
 class Controller {
     static async loginPage(req, res) {
@@ -24,22 +26,28 @@ class Controller {
     static async postLogin(req, res) {
         const { email, password } = req.body
         try {
-            let user = await User.findOne({ where: { email } })
+            if (!email || !password) {
+                const error = `Email and password is required!`
+                res.redirect(`/login?error=${error}`)
+            } else {
+                let user = await User.findOne({ where: { email } })
 
-            if (user) {
-                const isPasswordValid = bcryptjs.compareSync(password, user.password)
 
-                if (isPasswordValid) {
-                    req.session.user = { id: user.id, role: user.role }
+                if (user) {
+                    const isPasswordValid = bcryptjs.compareSync(password, user.password)
 
-                    res.redirect(`/home`)
+                    if (isPasswordValid) {
+                        req.session.user = { id: user.id, role: user.role }
+
+                        res.redirect(`/home`)
+                    } else {
+                        const error = `Invalid password`
+                        res.redirect(`/login?error=${error}`)
+                    }
                 } else {
-                    const error = `Invalid password`
+                    const error = `Invalid email`
                     res.redirect(`/login?error=${error}`)
                 }
-            } else {
-                const error = `Invalid email`
-                res.redirect(`/login?error=${error}`)
             }
         } catch (error) {
             console.log(error)
@@ -50,9 +58,9 @@ class Controller {
     static async home(req, res) {
         const { search } = req.query
         try {
-            let q = { include: { model: Company, attributes: ['name', 'address', 'sector'] }, attributes: ['id', 'value'], where: { UserId: req.session.user.id }, order: [['value', 'DESC']] }
+            let q = { include: { model: Company, attributes: ['name', 'address', 'sector'] }, attributes: ['name', 'id'], where: { UserId: req.session.user.id }, order: [[`name`, `ASC`]] }
             if (search) {
-                q.include.where = { name: { [Op.iLike]: `%${search}%` } }
+                q.where.name = { [Op.iLike]: `%${search}%` }
             }
             let dataPortofolio = await Portofolio.findAll(q)
             let dataProfile = await UserProfile.findOne({ where: { UserId: req.session.user.id } })
@@ -66,8 +74,9 @@ class Controller {
 
     static async addPortofolio(req, res) {
         try {
+            const { error } = req.query
             let dataCompanies = await Company.findAll({ attributes: ['id', 'name', 'sector'], order: [['name', 'ASC']] })
-            res.render(`page-add-portofolio`, { dataCompanies })
+            res.render(`page-add-portofolio`, { dataCompanies, error })
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -75,11 +84,11 @@ class Controller {
     }
 
     static async postAddPortofolio(req, res) {
-        const { CompanyId, value } = req.body
+        const { CompanyId, name, value } = req.body
         try {
             const transaction = await Portofolio.sequelize.transaction(async t => {
-                const newPortofolio = await Portofolio.create({ UserId: req.session.user.id, value: value }, { transaction: t })
-                const newPortofolioCompany = await PortofolioCompany.create({ PortofolioId: newPortofolio.id, CompanyId: CompanyId }, { transaction: t })
+                const newPortofolio = await Portofolio.create({ UserId: req.session.user.id, name: name }, { transaction: t })
+                const newPortofolioCompany = await PortofolioCompany.create({ PortofolioId: newPortofolio.id, CompanyId: CompanyId, value: value }, { transaction: t })
                 return { newPortofolio, newPortofolioCompany }
             })
             res.redirect(`/home`)
@@ -126,6 +135,12 @@ class Controller {
                 UserId: newUser.id,
                 name
             })
+
+            await sendEmail(
+                email,
+                'Welcome to Investra',
+                welcomeEmail(name)
+            )
 
             res.redirect('/login')
 
@@ -199,7 +214,8 @@ class Controller {
 
             await UserProfile.update(
                 {
-                    name: req.body.name
+                    name: req.body.name,
+                    photoUrl: req.body.photoUrl
                 },
                 {
                     where: {
@@ -220,6 +236,7 @@ class Controller {
         const { id } = req.params
         try {
             let dataPortofolioById = await Portofolio.fetchDataToEdit(id)
+            // res.send(dataPortofolioById)
             res.render(`page-edit-portofolio`, { dataPortofolioById })
         } catch (error) {
             console.log(error)
@@ -227,11 +244,22 @@ class Controller {
         }
     }
 
-    static async postEditPortofolio(req, res) {
-        const { id } = req.params
+    // static async postEditPortofolio(req, res) {
+    //     const { id } = req.params
+    //     try {
+    //         await Portofolio.update(req.body, { where: { id: id } })
+    //         res.redirect(`/home`)
+    //     } catch (error) {
+    //         console.log(error)
+    //         res.send(error)
+    //     }
+    // }
+
+    static async postEditPortofolioCompany(req, res) {
+        const { id, companyId } = req.params
         try {
-            await Portofolio.update(req.body, { where: { id: id } })
-            res.redirect(`/home`)
+            await PortofolioCompany.update({ value: req.body.value }, { where: { PortofolioId: id, CompanyId: companyId } })
+            res.redirect(`/edit/portofolio/${id}`)
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -244,6 +272,17 @@ class Controller {
             let dataPortofolioById = await Portofolio.findByPk(id)
             await dataPortofolioById.destroy()
             res.redirect(`/home`)
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    }
+
+    static async deleteCompanyPortofolio(req, res) {
+        const { id, companyId } = req.params
+        try {
+            await PortofolioCompany.destroy({ where: { PortofolioId: id, CompanyId: companyId } })
+            res.redirect(`/edit/portofolio/${id}`)
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -282,6 +321,36 @@ class Controller {
         } catch (error) {
             console.log(error)
             res.send(error)
+        }
+    }
+
+    static async addCompany(req, res) {
+        const { id } = req.params
+        try {
+            const { error } = req.query
+            let dataCompanies = await Company.findAll({ attributes: ['id', 'name', 'sector'], order: [['name', 'ASC']] })
+            let dataPortofolioById = await Portofolio.fetchDataToEdit(id)
+            // res.send(dataPortofolioById)
+            res.render(`page-add-company`, { id, dataCompanies, dataPortofolioById, error })
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    }
+
+    static async postAddCompany(req, res) {
+        const { id } = req.params
+        const { CompanyId, value } = req.body
+        try {
+            await PortofolioCompany.create({ CompanyId: CompanyId, PortofolioId: id, value: value })
+            res.redirect(`/edit/portofolio/${id}`)
+        } catch (error) {
+            console.log(error)
+            if (error.name === `SequelizeValidationError`) {
+                res.redirect(`/add/portofolio/${id}/companies?error=${error.errors.map(el => el.message)}`)
+            } else {
+                res.send(error)
+            }
         }
     }
 }

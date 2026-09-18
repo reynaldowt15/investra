@@ -40,6 +40,22 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    value: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `Value required!`
+        },
+        notEmpty: {
+          msg: `Value required!`
+        },
+        min: {
+          args: 50000,
+          msg: `Value minimum 50.000`
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'PortofolioCompany',
